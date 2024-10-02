@@ -6,15 +6,21 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+note: On the installation, it's better to use Expo Go.
+Just download it from Google Play Store.
+
+```bash
+npm install
+```
 
 2. Start the app
 
    ```bash
-    npx expo start
+    npx expo start -c
    ```
+
+note: after running these command, open your Expo Go app and scan the QR code
+also, the "-c" above cleans cache so it's kinda important
 
 In the output, you'll find options to open the app in a
 

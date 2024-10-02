@@ -15,7 +15,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   handlePress,
   containerStyles,
   textStyles,
-  isLoading = false, // Default value for isLoading
+  isLoading = false, 
 }) => {
   return (
     <TouchableOpacity

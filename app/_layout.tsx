@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { Slot, SplashScreen, Stack } from 'expo-router';
-import { useFonts } from 'expo-font';
-import { useEffect } from 'react';
+import { StyleSheet, Text, View } from "react-native";
+import { Slot, SplashScreen, Stack } from "expo-router";
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
+import Toast, {
+  BaseToast,
+  ToastConfigParams,
+} from "react-native-toast-message";
 
 SplashScreen.preventAutoHideAsync();
-
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
@@ -20,22 +23,64 @@ const RootLayout = () => {
   });
 
   useEffect(() => {
-    if(error) throw error;
+    if (error) throw error;
 
-    if(fontsLoaded) SplashScreen.hideAsync();
-  }, [fontsLoaded, error])
+    if (fontsLoaded) SplashScreen.hideAsync();
+  }, [fontsLoaded, error]);
 
-  if(!fontsLoaded && !error) return null;
+  if (!fontsLoaded && !error) return null;
+
+  const toastConfig = {
+    success: (internalState: ToastConfigParams<{}>) => (
+      <BaseToast
+        {...internalState}
+        style={{ borderLeftColor: "green", backgroundColor: "white" }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        text1Style={{ color: "black", fontWeight: "bold", fontSize: 17 }}
+        text2Style={{ color: "gray", fontSize: 15 }}
+      />
+    ),
+    error: (internalState: ToastConfigParams<{}>) => (
+      <BaseToast
+        {...internalState}
+        style={{ borderLeftColor: "red", backgroundColor: "white" }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        text1Style={{ color: "black", fontWeight: "bold", fontSize: 17 }}
+        text2Style={{ color: "gray", fontSize: 15 }}
+      />
+    ),
+    info: (internalState: ToastConfigParams<{}>) => (
+      <BaseToast
+        {...internalState}
+        style={{ borderLeftColor: "blue", backgroundColor: "white" }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        text1Style={{ color: "black", fontWeight: "bold", fontSize: 17 }}
+        text2Style={{ color: "gray", fontSize: 15 }}
+      />
+    ),
+    warning: (internalState: ToastConfigParams<{}>) => (
+      <BaseToast
+        {...internalState}
+        style={{ borderLeftColor: "orange", backgroundColor: "white" }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        text1Style={{ color: "black", fontWeight: "bold", fontSize: 17 }}
+        text2Style={{ color: "gray", fontSize: 15 }}
+      />
+    ),
+  };
 
   return (
-    <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }}/>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }}/>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
+    <>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }}/> */}
-    </Stack>
-  )
-}
+      </Stack>
 
-export default RootLayout
+      <Toast config={toastConfig} />
+    </>
+  );
+};
 
+export default RootLayout;
