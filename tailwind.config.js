@@ -4,20 +4,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#161622",
+        primary: "#F5F5F5",  // Light background
         secondary: {
-          DEFAULT: "#FF9C01",
+          DEFAULT: "#FF9C01",  // Keeping your secondary orange palette
           100: "#FF9001",
           200: "#FF8E01",
+          300: "#FF7F00", 
         },
         black: {
-          DEFAULT: "#000",
-          100: "#1E1E2D",
-          200: "#232533",
+          DEFAULT: "#333333",  // Darker text color for light background
+          100: "#4A4A4A",
+          200: "#666666",
         },
         gray: {
-          100: "#CDCDE0",
+          100: "#F0F0F0",  // Light gray for subtle elements
+          200: "#E5E7EB",  // Even lighter gray for background
+          300: "#D1D5DB",  // Middle gray for text
         },
+        white: "#FFFFFF",  // White for pure backgrounds if needed
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],
