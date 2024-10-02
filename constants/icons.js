@@ -11,8 +11,14 @@ import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
+import reports from "../assets/icons/reports.png";
+import supply from "../assets/icons/supply.png";
+import customers from "../assets/icons/customers.png";
 
 export default {
+  customers,
+  supply,
+  reports,
   play,
   bookmark,
   home,

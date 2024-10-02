@@ -7,11 +7,9 @@ import {
   TextInputProps,
 } from "react-native";
 import React, { useState } from "react";
-
 import { icons } from "../constants";
 
 interface FormFieldProps extends TextInputProps {
-  // Extend TextInputProps
   title: string;
   value: string;
   handleChangeText: (text: string) => void;
@@ -24,9 +22,12 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   handleChangeText,
   otherStyles = "",
-  ...props // Spread other props to TextInput
+  ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+
+  // Check if the field is related to passwords
+  const isPasswordField = title.toLowerCase().includes("password");
 
   return (
     <View className={`space-y-2 ${otherStyles}`}>
@@ -39,14 +40,14 @@ const FormField: React.FC<FormFieldProps> = ({
           placeholder={placeholder}
           placeholderTextColor="#7b7b8b"
           onChangeText={handleChangeText}
-          secureTextEntry={title === "Password" && !showPassword}
-          {...props} // Spread other props like keyboardType
+          secureTextEntry={isPasswordField && !showPassword}
+          {...props}
         />
 
-        {title === "Password" && (
+        {isPasswordField && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <Image
-              source={!showPassword ? icons.eye : icons.eyeHide}
+              source={showPassword ? icons.eyeHide : icons.eye}
               className="w-6 h-6"
               resizeMode="contain"
             />

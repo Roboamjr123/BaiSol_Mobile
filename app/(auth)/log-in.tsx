@@ -26,7 +26,7 @@ const LogIn = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full justify-center min-h-[85vh] px-4 my-6">
+        <View className="w-full justify-center min-h-[90vh] px-4 my-6">
           <Image
             source={images.logoSmall}
             resizeMode="contain"
@@ -52,8 +52,8 @@ const LogIn = () => {
           />
 
           <CustomButton
-            title="Login"
-            handlePress={() => router.push("/(tabs)/home")}
+            title="Login" 
+            handlePress={() => router.push("/(tabs)/home")} 
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />
@@ -61,7 +61,6 @@ const LogIn = () => {
           <View className="justify-center pt-5 flex-row gap-1">
             <TouchableOpacity
               onPress={() => {
-                // @ts-ignore
                 router.push("/forgot-pass");
               }}
             >

@@ -1,6 +1,7 @@
 import { View, Text, Image } from "react-native";
 import { Tabs } from "expo-router";
 import { icons } from "../../constants";
+import { useColorScheme } from "react-native"; // Import for detecting the theme
 
 // Define the props for the TabIcon component
 interface TabIconProps {
@@ -33,17 +34,21 @@ const TabIcon: React.FC<TabIconProps> = ({ icon, color, name, focused }) => {
 };
 
 const TabsLayout: React.FC = () => {
+  const colorScheme = useColorScheme(); // Get the current color scheme (light or dark)
+
+  const isLightMode = colorScheme === "light"; // Check if the current mode is light
+
   return (
     <>
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: "#FFA001",
-          tabBarInactiveTintColor: "#CDCDE0",
+          tabBarActiveTintColor: isLightMode ? "#FF9C01" : "#FF9C01", // Orange for both modes
+          tabBarInactiveTintColor: isLightMode ? "#666666" : "#CDCDE0", // Light gray for light mode, original color for dark mode
           tabBarStyle: {
-            backgroundColor: "#161622",
+            backgroundColor: isLightMode ? "#FFFFFF" : "#161622", // White for light mode, dark for dark mode
             borderTopWidth: 1,
-            borderTopColor: "#232533",
+            borderTopColor: isLightMode ? "#E0E0E0" : "#232533", // Light gray border for light mode
             height: 84,
           },
         }}
@@ -64,30 +69,45 @@ const TabsLayout: React.FC = () => {
           }}
         />
         <Tabs.Screen
-          name="bookmark"
+          name="reports"
           options={{
-            title: "Bookmark",
+            title: "Reports",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.bookmark}
+                icon={icons.reports}
                 color={color}
-                name="Bookmark"
+                name="Reports"
                 focused={focused}
               />
             ),
           }}
         />
         <Tabs.Screen
-          name="create"
+          name="supply"
           options={{
-            title: "Create",
+            title: "Supply",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.plus}
+                icon={icons.supply}
                 color={color}
-                name="Create"
+                name="Supply"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="customers"
+          options={{
+            title: "Customers",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.customers}
+                color={color}
+                name="Customers"
                 focused={focused}
               />
             ),

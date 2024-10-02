@@ -9,7 +9,19 @@ const AuthLayout = () => {
         <Stack.Screen 
           name="log-in"
           options={{ headerShown: false }}
-        /> 
+        />
+        <Stack.Screen 
+          name="forgot-pass"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="change-pass"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="verify2fa"
+          options={{ headerShown: false }}
+        />
       </Stack>
 
       <StatusBar backgroundColor='#161622' style='light'/>
