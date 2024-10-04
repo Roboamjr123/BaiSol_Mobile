@@ -38,11 +38,15 @@ const VerifyAccount = () => {
     e: NativeSyntheticEvent<TextInputKeyPressEventData>,
     index: number
   ) => {
-    if (e.nativeEvent.key === "Backspace" && index > 0 && !otp[index]) {
+    if (e.nativeEvent.key === "Backspace") {
       const newOtp = [...otp];
-      newOtp[index - 1] = ""; // Clear the previous input
+
+      // Clear the current input
+      newOtp[index] = "";
       setOtp(newOtp);
-      if (index > 0 && inputsRef.current[index - 1]) {
+
+      // Move focus to the previous input if it exists and the current input is empty
+      if (index > 0 && !otp[index]) {
         inputsRef.current[index - 1]?.focus();
       }
     }
@@ -56,6 +60,7 @@ const VerifyAccount = () => {
         type: "warning",
         position: "top",
       });
+
       setIsSubmitting(false);
       return;
     } else {
@@ -66,6 +71,10 @@ const VerifyAccount = () => {
         position: "top",
       });
       setIsSubmitting(true);
+      setTimeout(() => {
+        setIsSubmitting(false);
+        router.push("/(tabs)/home");
+      }, 1000);
       return;
     }
   };
@@ -73,7 +82,7 @@ const VerifyAccount = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full justify-center min-h-[85vh] px-4 my-6">
+        <View className="w-full justify-center min-h-[75vh] px-4 my-6">
           <Image
             source={images.logoSmall}
             resizeMode="contain"
