@@ -20,20 +20,38 @@ const LogIn = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
-  const submit = () => {};
+  const validateEmail = (email: string) => {
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return regex.test(email);
+  };
+
+  const submit = () => {
+    if (!validateEmail(form.email)) {
+      setEmailError("Please enter a valid email.");
+      setIsSubmitting(false);
+    } else {
+      setEmailError("");
+      setIsSubmitting(true);
+      setTimeout(() => {
+        setIsSubmitting(false);
+        router.push("/verify2fa");
+      }, 1000);
+    }
+  };
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full justify-center min-h-[90vh] px-4 my-6">
+        <View className="w-full justify-center min-h-[85vh] px-4 my-6">
           <Image
             source={images.logoSmall}
             resizeMode="contain"
             className="w-[80px] h-[80px]"
           />
           <Text className="text-2xl text-black text-semibold mt-6 font-psemibold">
-            Login to BaiSol
+            Login to <Text className="text-secondary-200">BaiSol</Text>
           </Text>
 
           <FormField
@@ -42,6 +60,8 @@ const LogIn = () => {
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7"
             keyboardType="email-address"
+            isError={!!emailError}
+            errorMessage={emailError}
           />
 
           <FormField
@@ -52,8 +72,8 @@ const LogIn = () => {
           />
 
           <CustomButton
-            title="Login" 
-            handlePress={() => router.push("/(tabs)/home")} 
+            title="Login"
+            handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />

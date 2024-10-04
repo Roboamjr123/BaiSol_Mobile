@@ -11,11 +11,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 
 const ChangePass = () => {
+  const { email } = useLocalSearchParams();
+
+  const emailValue = Array.isArray(email) ? email[0] : email || "";
+
   const [form, setForm] = useState({
-    email: "",
+    email: emailValue,
     npassword: "",
     cnpassword: "",
   });
@@ -34,7 +38,7 @@ const ChangePass = () => {
             className="w-[80px] h-[80px]"
           />
           <Text className="text-2xl text-black text-semibold mt-6 font-psemibold">
-            Change Password
+            Change <Text className="text-secondary-200">Password</Text>
           </Text>
 
           <FormField
@@ -43,6 +47,7 @@ const ChangePass = () => {
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7"
             keyboardType="email-address"
+            editable={false}
           />
 
           <FormField

@@ -19,8 +19,30 @@ const ForgotPass = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
-  const submit = () => {};
+  const validateEmail = (email: string) => {
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return regex.test(email);
+  };
+
+  const submit = () => {
+    if (!validateEmail(form.email)) {
+      setEmailError("Please enter a valid email.");
+      setIsSubmitting(false);
+    } else {
+      setEmailError("");
+      setIsSubmitting(true);
+      setTimeout(() => {
+        setIsSubmitting(false);
+
+        router.push({
+          pathname: "/change-pass",
+          params: { email: form.email },
+        });
+      }, 1000);
+    }
+  };
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -32,7 +54,7 @@ const ForgotPass = () => {
             className="w-[80px] h-[80px]"
           />
           <Text className="text-2xl text-black text-semibold mt-6 font-psemibold">
-            Forgot Password
+            Forgot<Text className="text-secondary-200"> Password</Text>
           </Text>
 
           <FormField
@@ -41,11 +63,13 @@ const ForgotPass = () => {
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7"
             keyboardType="email-address"
+            isError={!!emailError}
+            errorMessage={emailError}
           />
 
           <CustomButton
             title="Confirm"
-            handlePress={() => router.push("/(auth)/change-pass")}
+            handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />

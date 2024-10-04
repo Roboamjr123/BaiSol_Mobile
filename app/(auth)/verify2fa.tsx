@@ -38,11 +38,12 @@ const VerifyAccount = () => {
     e: NativeSyntheticEvent<TextInputKeyPressEventData>,
     index: number
   ) => {
-    if (e.nativeEvent.key === "Backspace" && index > 0 && !otp[index]) {
+    if (e.nativeEvent.key === "Backspace") {
       const newOtp = [...otp];
-      newOtp[index - 1] = ""; // Clear the previous input
+
+      newOtp[index] = "";
       setOtp(newOtp);
-      if (index > 0 && inputsRef.current[index - 1]) {
+      if (index > 0 && !otp[index]) {
         inputsRef.current[index - 1]?.focus();
       }
     }
@@ -66,6 +67,10 @@ const VerifyAccount = () => {
         position: "top",
       });
       setIsSubmitting(true);
+      setTimeout(() => {
+        setIsSubmitting(false);
+        router.push("/(tabs)/home");
+      }, 1000);
       return;
     }
   };
@@ -80,7 +85,7 @@ const VerifyAccount = () => {
             className="w-[80px] h-[80px]"
           />
           <Text className="text-2xl text-black text-semibold mt-6 font-psemibold">
-            Verify Your Account
+            Two-Factor Authentication
           </Text>
 
           <Text className="text-sm text-black-100 mt-6 font-pregular">
@@ -104,7 +109,7 @@ const VerifyAccount = () => {
           </View>
 
           <CustomButton
-            title="Verify"
+            title="Submit"
             handlePress={handleSubmit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
