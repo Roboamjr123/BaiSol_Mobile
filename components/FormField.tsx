@@ -14,8 +14,6 @@ interface FormFieldProps extends TextInputProps {
   value: string;
   handleChangeText: (text: string) => void;
   otherStyles?: string;
-  isError?: boolean; // Add isError prop
-  errorMessage?: string; // Optional prop to display error message
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -24,8 +22,6 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   handleChangeText,
   otherStyles = "",
-  isError = false,
-  errorMessage, // Destructure errorMessage prop
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,11 +33,7 @@ const FormField: React.FC<FormFieldProps> = ({
     <View className={`space-y-2 ${otherStyles}`}>
       <Text className="text-base text-black font-pmedium">{title}</Text>
 
-      <View
-        className={`border-2 w-full h-16 px-4 bg-white rounded-2xl flex-row items-center  ${
-          isError ? "border-red-500" : "border-gray-100"
-        } focus:border-secondary`}
-      >
+      <View className="border-2 border-gray-100 w-full h-16 px-4 bg-white rounded-2xl focus:border-secondary items-center flex-row">
         <TextInput
           className="flex-1 text-black-100 font-psemibold text-base"
           value={value}
@@ -62,10 +54,6 @@ const FormField: React.FC<FormFieldProps> = ({
           </TouchableOpacity>
         )}
       </View>
-
-      {isError && errorMessage ? ( // Display error message if isError is true
-        <Text className="text-red-500 text-sm">{errorMessage}</Text>
-      ) : null}
     </View>
   );
 };
