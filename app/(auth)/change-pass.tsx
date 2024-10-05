@@ -15,7 +15,6 @@ import { Link, router, useLocalSearchParams } from "expo-router";
 
 const ChangePass = () => {
   const { email } = useLocalSearchParams();
-
   const emailValue = Array.isArray(email) ? email[0] : email || "";
 
   const [form, setForm] = useState({
@@ -25,13 +24,47 @@ const ChangePass = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
 
-  const submit = () => {};
+  // Function to validate password
+  const validatePassword = (password: string) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
+
+  const submit = () => {
+    const { npassword, cnpassword } = form;
+
+    if (!validatePassword(npassword)) {
+      setError(
+        "Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character."
+      );
+      return;
+    }
+
+    // Check if passwords match
+    if (npassword !== cnpassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    // If validation passes, clear error and proceed
+    setError(undefined);
+    setIsSubmitting(true);
+
+    // Simulate submission (replace with actual API call)
+    setTimeout(() => {
+      setIsSubmitting(true);
+      
+      router.push("/(tabs)/home");
+    }, 1000);
+
+  };
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full justify-center min-h-[85vh] px-4 my-6">
+        <View className="w-full justify-center min-h-[80vh] px-4 my-6">
           <Image
             source={images.logoSmall}
             resizeMode="contain"
@@ -55,6 +88,8 @@ const ChangePass = () => {
             value={form.npassword}
             handleChangeText={(e) => setForm({ ...form, npassword: e })}
             otherStyles="mt-3"
+            isError={!!error}
+            errorMessage={error}
           />
 
           <FormField
@@ -62,14 +97,12 @@ const ChangePass = () => {
             value={form.cnpassword}
             handleChangeText={(e) => setForm({ ...form, cnpassword: e })}
             otherStyles="mt-3"
+            isError={!!error}
           />
 
           <CustomButton
             title="Submit"
-            handlePress={() => {
-              // @ts-ignore
-              router.push("/verify2fa");
-            }}
+            handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />

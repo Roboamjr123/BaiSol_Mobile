@@ -61,7 +61,7 @@ const VerifyAccount = () => {
       return;
     } else {
       Toast.show({
-        text1: "Success",
+        text1: "Login Success",
         text2: "Proceeding to Home",
         type: "success",
         position: "top",

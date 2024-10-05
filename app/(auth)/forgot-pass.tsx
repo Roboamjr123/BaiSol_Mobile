@@ -12,6 +12,7 @@ import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
+import Toast from "react-native-toast-message";
 
 const ForgotPass = () => {
   const [form, setForm] = useState({
@@ -33,6 +34,14 @@ const ForgotPass = () => {
     } else {
       setEmailError("");
       setIsSubmitting(true);
+
+      Toast.show({
+        text1: "Check your email",
+        text2: "Click the link sent in your email for resetting your password.",
+        type: "success",
+        position: "top",
+      });
+
       setTimeout(() => {
         setIsSubmitting(false);
 
@@ -40,7 +49,7 @@ const ForgotPass = () => {
           pathname: "/change-pass",
           params: { email: form.email },
         });
-      }, 1000);
+      }, 3000);
     }
   };
 
