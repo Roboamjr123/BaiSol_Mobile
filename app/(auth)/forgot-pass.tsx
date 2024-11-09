@@ -37,7 +37,7 @@ const ForgotPass = () => {
 
       Toast.show({
         text1: "Check your email",
-        text2: "Click the link sent in your email for resetting your password.",
+        text2: "A link is sent in your email for resetting your password.",
         type: "success",
         position: "top",
       });
