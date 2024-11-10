@@ -13,11 +13,14 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import Toast from "react-native-toast-message";
+import { useAuth } from "../auth-context";
 
 const ForgotPass = () => {
   const [form, setForm] = useState({
     email: "",
   });
+
+  const { setEmail } = useAuth();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState("");
@@ -33,6 +36,8 @@ const ForgotPass = () => {
       setIsSubmitting(false);
     } else {
       setEmailError("");
+
+      setEmail(form.email);
       setIsSubmitting(true);
 
       Toast.show({
@@ -47,7 +52,6 @@ const ForgotPass = () => {
 
         router.push({
           pathname: "/change-pass",
-          params: { email: form.email },
         });
       }, 3000);
     }

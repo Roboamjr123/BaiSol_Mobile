@@ -13,10 +13,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import CustomButton from "../../components/CustomButton";
 import Toast from "react-native-toast-message";
+import { useAuth } from "../auth-context";
 
 import { router } from "expo-router";
 
 const VerifyAccount = () => {
+  const { email } = useAuth();
+
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const inputsRef = useRef<(TextInput | null)[]>([]); // Store references to the inputs
@@ -62,14 +65,16 @@ const VerifyAccount = () => {
     } else {
       Toast.show({
         text1: "Login Success",
-        text2: "Proceeding to Home",
+        text2: "Proceeding to BaiSol",
         type: "success",
         position: "top",
       });
       setIsSubmitting(true);
       setTimeout(() => {
         setIsSubmitting(false);
-        router.push("/(tabs)/home");
+        router.push({
+          pathname: "/(tabs)/home",
+        });
       }, 1000);
       return;
     }
@@ -89,8 +94,8 @@ const VerifyAccount = () => {
           </Text>
 
           <Text className="text-sm text-black-100 mt-6 font-pregular">
-            Enter the 6-digit verification code that was sent to your email
-            account.
+            Enter the 6-digit verification code that was sent to {""}
+            <Text className="text-secondary-300">{email}</Text>
           </Text>
 
           <View className="flex-row justify-center gap-2 mt-6">

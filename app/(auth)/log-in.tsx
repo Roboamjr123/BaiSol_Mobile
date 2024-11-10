@@ -11,12 +11,15 @@ import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { router } from "expo-router";
+import { useAuth } from "../auth-context";
 
 const LogIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const { setEmail } = useAuth();
 
   const validateEmail = (email: string) => {
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -42,10 +45,12 @@ const LogIn = () => {
 
     if (hasError) return;
 
+    setEmail(form.email);
     setIsSubmitting(true);
+
     setTimeout(() => {
       setIsSubmitting(false);
-      router.push("/verify2fa");
+      router.push({ pathname: "/verify2fa" });
     }, 1000);
   };
 

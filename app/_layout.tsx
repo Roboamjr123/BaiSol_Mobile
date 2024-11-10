@@ -6,6 +6,7 @@ import Toast, {
   BaseToast,
   ToastConfigParams,
 } from "react-native-toast-message";
+import { AuthProvider } from "./auth-context";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -70,7 +71,7 @@ const RootLayout = () => {
   };
 
   return (
-    <>
+    <AuthProvider>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
@@ -79,7 +80,7 @@ const RootLayout = () => {
       </Stack>
 
       <Toast config={toastConfig} />
-    </>
+    </AuthProvider>
   );
 };
 

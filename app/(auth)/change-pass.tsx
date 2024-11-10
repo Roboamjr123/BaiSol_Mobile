@@ -11,10 +11,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { Link, router } from "expo-router";
+import Toast from "react-native-toast-message";
+import { useAuth } from "../auth-context";
 
 const ChangePass = () => {
-  const { email } = useLocalSearchParams();
+  const { email } = useAuth();
   const emailValue = Array.isArray(email) ? email[0] : email || "";
 
   const [form, setForm] = useState({
@@ -54,9 +56,17 @@ const ChangePass = () => {
 
     // Simulate submission (replace with actual API call)
     setTimeout(() => {
-      setIsSubmitting(true);
+      setIsSubmitting(false);
+      Toast.show({
+        text1: "Success",
+        text2: "Password changed and login successfully.",
+        type: "success",
+        position: "top",
+      });
+      router.push({
+        pathname: "/(tabs)/home",
+      });
       
-      router.push("/(tabs)/home");
     }, 1000);
 
   };

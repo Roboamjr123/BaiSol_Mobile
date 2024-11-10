@@ -1,135 +1,92 @@
 import { View, Text, Image } from "react-native";
 import { Tabs } from "expo-router";
 import { icons } from "../../constants";
-import { useColorScheme } from "react-native"; // Import for detecting the theme
+import { useColorScheme } from "react-native";
+import { users } from "../../constants/SampleData";
+import { useAuth } from "../auth-context";
 
-// Define the props for the TabIcon component
 interface TabIconProps {
-  icon: any; // You can specify a more precise type based on your icon assets
+  icon: any;
   color: string;
   name: string;
   focused: boolean;
 }
 
-const TabIcon: React.FC<TabIconProps> = ({ icon, color, name, focused }) => {
-  return (
-    <View className="items-center justify-center gap-2">
-      <Image
-        source={icon}
-        resizeMode="contain"
-        style={{ tintColor: color }}
-        className="w-6 h-6"
-      />
-      <Text
-        style={{
-          fontFamily: focused ? "Poppins-SemiBold" : "Poppins-Regular",
-          color: color,
-        }}
-        className="text-xs"
-      >
-        {name}
-      </Text>
-    </View>
-  );
-};
+const TabIcon: React.FC<TabIconProps> = ({ icon, color, name, focused }) => (
+  <View className="items-center justify-center gap-2">
+    <Image
+      source={icon}
+      resizeMode="contain"
+      style={{ tintColor: color }}
+      className="w-6 h-6"
+    />
+    <Text
+      style={{
+        fontFamily: focused ? "Poppins-SemiBold" : "Poppins-Regular",
+        color: color,
+      }}
+      className="text-xs"
+    >
+      {name}
+    </Text>
+  </View>
+);
 
 const TabsLayout: React.FC = () => {
-  const colorScheme = useColorScheme(); // Get the current color scheme (light or dark)
+  const colorScheme = useColorScheme();
+  const isLightMode = colorScheme === "light";
 
-  const isLightMode = colorScheme === "light"; // Check if the current mode is light
+  const { email } = useAuth();
+  const user = users.find((user) => user.email === email);
+  const isFacilitator = user?.role === "Facilitator";
+
+  // Tab items configuration (conditionally include 'Supply' and 'Customers' if user is a Facilitator)
+  const tabItems = [
+    { name: "home", title: "Home", icon: icons.home },
+    { name: "reports", title: "Reports", icon: icons.reports },
+    ...(isFacilitator
+      ? [
+          { name: "supply", title: "Supply", icon: icons.supply },
+          { name: "customers", title: "Customers", icon: icons.customers },
+        ]
+      : []),
+    { name: "profile", title: "Profile", icon: icons.profile },
+  ];
 
   return (
-    <>
-      <Tabs
-        screenOptions={{
-          tabBarShowLabel: false,
-          tabBarActiveTintColor: isLightMode ? "#FF9C01" : "#FF9C01", // Orange for both modes
-          tabBarInactiveTintColor: isLightMode ? "#666666" : "#CDCDE0", // Light gray for light mode, original color for dark mode
-          tabBarStyle: {
-            backgroundColor: isLightMode ? "#FFFFFF" : "#161622", // White for light mode, dark for dark mode
-            borderTopWidth: 1,
-            borderTopColor: isLightMode ? "#E0E0E0" : "#232533", // Light gray border for light mode
-            height: 84,
-          },
-        }}
-      >
+    <Tabs
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "#FF9C01",
+        tabBarInactiveTintColor: isLightMode ? "#666666" : "#CDCDE0",
+        tabBarStyle: {
+          backgroundColor: isLightMode ? "#FFFFFF" : "#161622",
+          borderTopWidth: 1,
+          borderTopColor: isLightMode ? "#E0E0E0" : "#232533",
+          height: 84,
+          justifyContent: "center",
+        },
+      }}
+    >
+      {tabItems.map(({ name, title, icon }) => (
         <Tabs.Screen
-          name="home"
+          key={name}
+          name={name}
           options={{
-            title: "Home",
+            title,
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.home}
+                icon={icon}
                 color={color}
-                name="Home"
+                name={title}
                 focused={focused}
               />
             ),
           }}
         />
-        <Tabs.Screen
-          name="reports"
-          options={{
-            title: "Reports",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.reports}
-                color={color}
-                name="Reports"
-                focused={focused}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="supply"
-          options={{
-            title: "Supply",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.supply}
-                color={color}
-                name="Supply"
-                focused={focused}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="customers"
-          options={{
-            title: "Customers",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.customers}
-                color={color}
-                name="Customers"
-                focused={focused}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profile",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.profile}
-                color={color}
-                name="Profile"
-                focused={focused}
-              />
-            ),
-          }}
-        />
-      </Tabs>
-    </>
+      ))}
+    </Tabs>
   );
 };
 
