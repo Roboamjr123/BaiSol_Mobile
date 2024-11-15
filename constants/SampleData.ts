@@ -6,6 +6,7 @@ export interface User {
   role: "Facilitator" | "Customer";
   address: string;
   email: string;
+  status: "Active" | "On-Work" | "Suspended";
 }
 
 export interface Project {
@@ -28,6 +29,7 @@ export const users: User[] = [
     role: "Facilitator",
     address: "123 Main St, Springfield",
     email: "gocotano.joshua02@gmail.com",
+    status: "Active",
   },
   {
     id: 2,
@@ -37,6 +39,7 @@ export const users: User[] = [
     role: "Customer",
     address: "456 Elm St, Riverside",
     email: "gecole.angelie@gmail.com",
+    status: "Active",
   },
   {
     id: 3,
@@ -46,6 +49,7 @@ export const users: User[] = [
     role: "Facilitator",
     address: "789 Oak Ave, Greenville",
     email: "michaelbrown@example.com",
+    status: "Active",
   },
   {
     id: 4,
@@ -55,6 +59,7 @@ export const users: User[] = [
     role: "Customer",
     address: "321 Maple St, Hilltown",
     email: "emilyjohnson@example.com",
+    status: "Active",
   },
   {
     id: 5,
@@ -64,6 +69,7 @@ export const users: User[] = [
     role: "Customer",
     address: "654 Pine Dr, Lakeview",
     email: "sarahwilliams@example.com",
+    status: "Active",
   },
 ];
 
