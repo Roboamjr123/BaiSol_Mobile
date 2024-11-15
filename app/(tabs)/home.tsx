@@ -3,7 +3,7 @@
 import { View, Text } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { Link, router } from "expo-router";
 import { useAuth } from "../auth-context";
 
 const Home = () => {

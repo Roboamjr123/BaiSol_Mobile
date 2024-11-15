@@ -5,6 +5,7 @@ import { useAuth } from "../auth-context";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appearance } from "react-native";
 import { images, icons } from "@/constants";
+import { router } from "expo-router";
 
 // Detect if the current theme is dark or light
 const isDarkMode = Appearance.getColorScheme() === "dark";
@@ -12,6 +13,8 @@ const isDarkMode = Appearance.getColorScheme() === "dark";
 const Profile = () => {
   const { email } = useAuth();
   const user = users.find((user) => user.email === email);
+
+  const { setEmail } = useAuth();
 
   if (!user) {
     return (
@@ -31,7 +34,12 @@ const Profile = () => {
     );
   }
 
-  const logout = () => {};
+  const logout = () => {
+    setTimeout(() => {
+      router.replace("/log-in");
+    }, 500);
+    setEmail(null);
+  };
 
   return (
     <SafeAreaView
@@ -46,9 +54,9 @@ const Profile = () => {
           />
         </TouchableOpacity>
 
-        <View className="w-full justify-center items-center mt-6 mb-6 px-4">
+        <View className="w-full justify-center items-center mt-6 mb-7 px-4">
           <TouchableOpacity className="flex items-center">
-            <View className="w-32 h-32 border border-secondary rounded-full mb-4 justify-center items-center">
+            <View className="w-32 h-32 border-2 border-secondary rounded-full mb-4 justify-center items-center">
               <Image
                 source={images.profile}
                 className="w-[90%] h-[90%] rounded-full"
@@ -64,18 +72,29 @@ const Profile = () => {
               {user.name}
             </Text>
 
-            <Text
-              className={`text-base tracking-widest mb-2 ${
-                isDarkMode ? "text-[#B0B0B0]" : "text-[#555555]"
-              }`}
-            >
-              {user.role.toUpperCase()}
-            </Text>
+            <View className="flex-row items-center">
+              <Text
+                className={`text-base tracking-widest ${
+                  isDarkMode ? "text-[#B0B0B0]" : "text-[#555555]"
+                }`}
+              >
+                {user.role.toUpperCase()}
+              </Text>
+              <View
+                className={`ml-2 w-3 h-3 rounded-full ${
+                  user.status === "Active"
+                    ? "bg-green-500"
+                    : user.status === "On-Work"
+                    ? "bg-orange-400"
+                    : "bg-red-500"
+                }`}
+              />
+            </View>
           </TouchableOpacity>
         </View>
 
         {/* Profile Info Card */}
-        <View
+        <TouchableOpacity
           className={`rounded-xl p-6 my-4 ${
             isDarkMode ? "bg-[#232533]" : "bg-white"
           } shadow-lg`}
@@ -89,10 +108,10 @@ const Profile = () => {
           </Text>
 
           {[
-            { label: "Name", value: user.name },
+            // { label: "Name", value: user.name },
             { label: "Age", value: user.age },
             { label: "Gender", value: user.gender },
-            { label: "Role", value: user.role },
+            // { label: "Role", value: user.role },
             { label: "Address", value: user.address },
             { label: "Email", value: user.email },
             { label: "Status", value: user.status },
@@ -117,7 +136,7 @@ const Profile = () => {
               </Text>
             </View>
           ))}
-        </View>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

@@ -17,7 +17,7 @@ import CustomButton from "../components/CustomButton";
 import { Colors } from "@/constants/Colors";
 
 export default function App() {
-  const cardImages = [images.card1, images.card2, images.card3];
+  const cardImages = [images.card1, images.card2, images.card3, images.card4, images.card5];
   const [activeIndex, setActiveIndex] = useState(0); // To track the active card index
   const scaleAnimation = useRef(new Animated.Value(1)).current; // Animation value
 

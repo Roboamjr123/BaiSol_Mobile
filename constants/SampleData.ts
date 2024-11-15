@@ -29,7 +29,7 @@ export const users: User[] = [
     role: "Facilitator",
     address: "123 Main St, Springfield",
     email: "gocotano.joshua02@gmail.com",
-    status: "Active",
+    status: "On-Work",
   },
   {
     id: 2,
@@ -71,6 +71,16 @@ export const users: User[] = [
     email: "sarahwilliams@example.com",
     status: "Active",
   },
+  {
+    id: 6,
+    name: "Roboam Dosdos",
+    age: 23,
+    gender: "Male",
+    role: "Customer",
+    address: "V. Rama, Cebu City",
+    email: "dosdos@gmail.com",
+    status: "Active",
+  },
 ];
 
 export const projects: Project[] = [
@@ -92,7 +102,7 @@ export const projects: Project[] = [
     facilitatorId: 3,  // Michael Brown
     startDate: "2024-12-15",
     endDate: "2025-06-30",
-    status: "Completed",
+    status: "On-Going",
   },
   {
     projectId: 103,
@@ -100,9 +110,19 @@ export const projects: Project[] = [
     description: "Construction of a new community center in Lakeview with an Off-Grid solar system",
     customerId: 5,  // Sarah Williams
     facilitatorId: 1,  // Joshua Gocotano
-    startDate: "2024-11-10",
-    endDate: "2025-04-20",
-    status: "On-Going",
+    startDate: "2024-01-10",
+    endDate: "2024-02-22",
+    status: "Completed",
+  },
+  {
+    projectId: 104,
+    name: "Cebu Landers Superstore",
+    description: "Putting a HYBRID solar system for the superstore in Cebu",
+    customerId: 6,  // Roboam Dosdos
+    facilitatorId: 1,  // Joshua Gocotano
+    startDate: "2024-02-26",
+    endDate: "2024-03-10",
+    status: "Completed",
   },
 ];
 
