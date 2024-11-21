@@ -40,8 +40,7 @@ const TabsLayout: React.FC = () => {
   const user = users.find((user) => user.email === email);
   const isFacilitator = user?.role === "Facilitator";
 
-  // Tab items configuration (conditionally include 'Supply' and 'Customers' if user is a Facilitator)
-  const tabItems = [
+  const tabs = [
     { name: "home", title: "Home", icon: icons.home },
     { name: "reports", title: "Reports", icon: icons.reports },
     ...(isFacilitator
@@ -68,7 +67,7 @@ const TabsLayout: React.FC = () => {
         },
       }}
     >
-      {tabItems.map(({ name, title, icon }) => (
+      {tabs.map(({ name, title, icon }) => (
         <Tabs.Screen
           key={name}
           name={name}

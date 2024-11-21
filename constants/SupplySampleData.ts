@@ -8,7 +8,7 @@ interface Material {
 
 interface Equipment {
   id: number;
-  MatN: string;
+  EqpmntN: string;
   qty: number;
   status: string;
 }
@@ -27,16 +27,16 @@ export const materialsData: Material[] = [
 ];
 
 export const equipmentData: Equipment[] = [
-  { id: 1, MatN: "Solar Panel Installation Kit", qty: 10, status: "Available" },
-  { id: 2, MatN: "Digital Multimeter", qty: 15, status: "In Use" },
-  { id: 3, MatN: "MC4 Crimping Tool", qty: 20, status: "Available" },
-  { id: 4, MatN: "Cable Stripper", qty: 25, status: "Available" },
-  { id: 5, MatN: "PV Wire Cutter", qty: 30, status: "Available" },
-  { id: 6, MatN: "Battery Lug Crimper", qty: 12, status: "In Maintenance" },
-  { id: 7, MatN: "Safety Harness", qty: 50, status: "Available" },
-  { id: 8, MatN: "Solar Panel Cleaning Kit", qty: 20, status: "In Use" },
-  { id: 9, MatN: "Infrared Thermometer", qty: 10, status: "Available" },
-  { id: 10, MatN: "Voltage Tester", qty: 25, status: "Available" },
-  { id: 11, MatN: "Torque Wrench", qty: 35, status: "In Use" },
-  { id: 12, MatN: "Drill and Driver Set", qty: 40, status: "Available" },
+  { id: 1, EqpmntN: "Solar Panel Installation Kit", qty: 10, status: "Available" },
+  { id: 2, EqpmntN: "Digital Multimeter", qty: 15, status: "In Use" },
+  { id: 3, EqpmntN: "MC4 Crimping Tool", qty: 20, status: "Available" },
+  { id: 4, EqpmntN: "Cable Stripper", qty: 25, status: "Available" },
+  { id: 5, EqpmntN: "PV Wire Cutter", qty: 30, status: "Available" },
+  { id: 6, EqpmntN: "Battery Lug Crimper", qty: 12, status: "In Maintenance" },
+  { id: 7, EqpmntN: "Safety Harness", qty: 50, status: "Available" },
+  { id: 8, EqpmntN: "Solar Panel Cleaning Kit", qty: 20, status: "In Use" },
+  { id: 9, EqpmntN: "Infrared Thermometer", qty: 10, status: "Available" },
+  { id: 10, EqpmntN: "Voltage Tester", qty: 25, status: "Available" },
+  { id: 11, EqpmntN: "Torque Wrench", qty: 35, status: "In Use" },
+  { id: 12, EqpmntN: "Drill and Driver Set", qty: 40, status: "Available" },
 ];
