@@ -2,6 +2,7 @@ import { View, Text, TextInput, Button, Modal } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import FormField from "./FormField";
 
 interface RequestSupplyProps {
   isVisible: boolean;
@@ -12,20 +13,18 @@ const RequestSupply: React.FC<RequestSupplyProps> = ({
   isVisible,
   onClose,
 }) => {
-  const [supplyName, setSupplyName] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [form, setForm] = useState({ supplyName: "", quantity: "" });
 
   const handleSubmit = () => {
-    if (supplyName && quantity) {
+    if (form.supplyName && form.quantity) {
       Toast.show({
-        text1: "Request Successful",
-        text2: "name and qty here",
+        text1: "Requested Successfully",
+        text2: "Request of " + form.quantity + " " + form.supplyName,
         type: "success",
         position: "top",
       });
 
-      setSupplyName("");
-      setQuantity("");
+      setForm({supplyName: "", quantity: ""})
       onClose();
     } else {
       alert("Please fill in both fields!");
@@ -45,24 +44,30 @@ const RequestSupply: React.FC<RequestSupplyProps> = ({
             Request a Supply
           </Text>
 
-          <TextInput
-            className="border border-gray-300 rounded-md mb-3 p-3 text-lg"
-            placeholder="Supply Name"
-            value={supplyName}
-            onChangeText={setSupplyName}
+          <FormField
+            title="Supply Name"
+            value={form.supplyName}
+            handleChangeText={(e) => setForm({ ...form, supplyName: e })}
+            placeholder="ex.: Grinder"
+            otherStyles="mb-4"
           />
 
-          <TextInput
-            className="border border-gray-300 rounded-md mb-4 p-3 text-lg"
-            placeholder="Quantity"
-            value={quantity}
-            onChangeText={setQuantity}
-            keyboardType="numeric"
+          <FormField
+            title="Quantity"
+            value={form.quantity}
+            handleChangeText={(e) => setForm({ ...form, quantity: e })}
+            placeholder="How many?"
+            otherStyles="mb-6"
           />
 
-          <View className="flex-row justify-between">
-            <Button title="Submit" onPress={handleSubmit} />
-            <Button title="Cancel" onPress={onClose} color="red" />
+          <View className="flex-row justify-end">
+            <View className="mr-2">
+              <Button title="Submit" onPress={handleSubmit} />
+            </View>
+
+            <View>
+              <Button title="Cancel" onPress={onClose} color="red" />
+            </View>
           </View>
         </View>
       </SafeAreaView>

@@ -44,12 +44,9 @@ const Customers = () => {
     setSelectedProjectId(null);
   };
 
-  // Use the useColorScheme hook for dynamic dark/light mode detection
-  const colorScheme = useColorScheme(); // 'light' or 'dark'
+  const colorScheme = useColorScheme();
 
-  // Render a customer card
   const renderCustomer = ({ item }: { item: (typeof users)[0] }) => {
-    // Find the project for the customer (if exists)
     const project = Projects.find((project) => project.customerId === item.id);
 
     return (
@@ -140,7 +137,7 @@ const Customers = () => {
         </Text>
       )}
 
-      {/* Other Customers */}
+      {/* Other Facilitators' Customers */}
       <Text
         className={`text-xl font-bold mt-6 mb-2 ${
           colorScheme === "dark" ? "text-white" : "text-[#333333]"
@@ -164,9 +161,12 @@ const Customers = () => {
         </Text>
       )}
 
-      {/* Show the Project Info Modal */}
+      {/* Project Info Modal */}
       {modalVisible && selectedProjectId !== null && (
-        <ProjectInfoModal projectId={selectedProjectId} onClose={handleCloseModal} />
+        <ProjectInfoModal
+          projectId={selectedProjectId}
+          onClose={handleCloseModal}
+        />
       )}
     </SafeAreaView>
   );

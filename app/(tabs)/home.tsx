@@ -15,6 +15,7 @@ const Home = () => {
         Welcome to BaiSol {""}
         <Text className="text-secondary-300">{email}</Text>
       </Text>
+      
     </SafeAreaView>
   );
 };
