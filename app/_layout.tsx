@@ -7,6 +7,7 @@ import Toast, {
   ToastConfigParams,
 } from "react-native-toast-message";
 import { AuthProvider } from "./auth-context";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -70,17 +71,21 @@ const RootLayout = () => {
     ),
   };
 
-  return (
-    <AuthProvider>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }}/> */}
-      </Stack>
+  const queryClient = new QueryClient({});
 
-      <Toast config={toastConfig} />
-    </AuthProvider>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }}/> */}
+        </Stack>
+
+        <Toast config={toastConfig} />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 
