@@ -12,6 +12,8 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { router } from "expo-router";
 import { useAuth } from "../auth-context";
+import { useLoginMutation } from "@/api/AuthAPI";
+import Toast from "react-native-toast-message";
 
 const LogIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -20,6 +22,8 @@ const LogIn = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const { setEmail } = useAuth();
+
+  const loginUser = useLoginMutation();
 
   const validateEmail = (email: string) => {
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -45,13 +49,15 @@ const LogIn = () => {
 
     if (hasError) return;
 
-    setEmail(form.email);
-    setIsSubmitting(true);
-
-    setTimeout(() => {
-      setIsSubmitting(false);
-      router.push({ pathname: "/verify2fa" });
-    }, 1000);
+    loginUser.mutateAsync(
+      { email: form.email, password: form.password },
+      {
+        onSuccess: (data) => {
+          router.push({ pathname: "/verify2fa" });
+          setEmail(form.email);
+        },
+      }
+    );
   };
 
   return (
@@ -90,7 +96,7 @@ const LogIn = () => {
             title="Login"
             handlePress={submit}
             containerStyles="mt-7"
-            isLoading={isSubmitting}
+            isLoading={loginUser.isPending}
           />
 
           <View className="justify-center pt-5 flex-row gap-1">

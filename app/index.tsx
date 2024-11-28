@@ -8,6 +8,7 @@ import {
   Animated,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  ActivityIndicator,
 } from "react-native"; // Import the necessary types
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useRef } from "react";
@@ -17,7 +18,13 @@ import CustomButton from "../components/CustomButton";
 import { Colors } from "@/constants/Colors";
 
 export default function App() {
-  const cardImages = [images.card1, images.card2, images.card3, images.card4, images.card5];
+  const cardImages = [
+    images.card1,
+    images.card2,
+    images.card3,
+    images.card4,
+    images.card5,
+  ];
   const [activeIndex, setActiveIndex] = useState(0); // To track the active card index
   const scaleAnimation = useRef(new Animated.Value(1)).current; // Animation value
 
@@ -47,7 +54,10 @@ export default function App() {
               className="w-[60px] h-[80px]"
               resizeMode="contain"
             />
-            <Text className="text-3xl font-black text-secondary-200"> BAiSOL </Text>
+            <Text className="text-3xl font-black text-secondary-200">
+              {" "}
+              BAiSOL{" "}
+            </Text>
           </View>
 
           {/* Horizontal Scrollable Card Carousel */}
