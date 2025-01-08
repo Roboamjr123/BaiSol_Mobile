@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Slot, SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
@@ -82,7 +82,31 @@ const RootLayout = () => {
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="facilitator-tabs"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="customer-tabs"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="customer/bill-payment"
+              options={{
+                headerShown: true,
+                title: "Bill Payment",
+                headerStyle: {
+                  backgroundColor: "#161622",
+                },
+                headerTitleStyle: {
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: 18,
+                },
+                headerTintColor: "#ff6f00",
+              }}
+            />
+
             {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }}/> */}
           </Stack>
 

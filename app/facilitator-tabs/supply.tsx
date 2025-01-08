@@ -117,7 +117,8 @@ const Supply = () => {
         className="mb-4"
       />
 
-      <TouchableOpacity onPress={openModal}
+      <TouchableOpacity
+        onPress={openModal}
         className={`flex-row items-center justify-between px-4 py-3 rounded-md ${styles.buttonBackground}`}
       >
         <Text className={`text-md font-semibold ${styles.buttonText}`}>

@@ -38,7 +38,7 @@ export const users: User[] = [
     gender: "Female",
     role: "Customer",
     address: "456 Elm St, Riverside",
-    email: "gecole.angelie@gmail.com",
+    email: "angeleajeasgecole@gmail.com",
     status: "Active",
   },
   {
@@ -91,7 +91,7 @@ export const projects: Project[] = [
     customerId: 2,  // Angelie Gecole
     facilitatorId: 1,  // Joshua Gocotano
     startDate: "2024-11-01",
-    endDate: "2025-05-01",
+    endDate: "2025-01-28",
     status: "On-Going",
   },
   {
@@ -108,7 +108,7 @@ export const projects: Project[] = [
     projectId: 103,
     name: "Lakeview Community Center",
     description: "Construction of a new community center in Lakeview with an Off-Grid solar system",
-    customerId: 5,  // Sarah Williams
+    customerId: 2,  // Angelie Gecole
     facilitatorId: 1,  // Joshua Gocotano
     startDate: "2024-01-10",
     endDate: "2024-02-22",

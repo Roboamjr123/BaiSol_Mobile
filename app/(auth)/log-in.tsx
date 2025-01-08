@@ -12,52 +12,71 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { router } from "expo-router";
 import { useAuth } from "../auth-context";
-import { useLoginMutation } from "@/api/AuthAPI";
+import { users } from "../../constants/SampleData";
 import Toast from "react-native-toast-message";
 
 const LogIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [errors, setErrors] = useState({ email: "", password: "" });
 
   const { setEmail } = useAuth();
-
-  const loginUser = useLoginMutation();
 
   const validateEmail = (email: string) => {
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return regex.test(email);
   };
 
-  const submit = () => {
+  const handleSubmit = () => {
+    const { email, password } = form;
     let hasError = false;
+    const newErrors = { email: "", password: "" };
 
-    if (!validateEmail(form.email)) {
-      setEmailError("Please enter a valid email.");
+    if (!validateEmail(email)) {
+      newErrors.email = "Please enter a valid email.";
       hasError = true;
-    } else {
-      setEmailError("");
     }
 
-    if (!form.password) {
-      setPasswordError("Password cannot be empty.");
+    if (!password) {
+      newErrors.password = "Password cannot be empty.";
       hasError = true;
-    } else {
-      setPasswordError("");
     }
 
-    if (hasError) return;
+    setErrors(newErrors);
 
-    loginUser.mutateAsync(
-      { email: form.email, password: form.password },
-      {
-        onSuccess: (data) => {
-          router.push({ pathname: "/verify2fa" });
-          setEmail(form.email);
-        },
-      }
-    );
+    if (hasError) {
+      Toast.show({
+        type: "error",
+        text1: "Validation Error",
+        text2: "Please fix the highlighted errors.",
+      });
+      return;
+    }
+
+    const user = users.find((user) => user.email === email);
+
+    if (!user) {
+      Toast.show({
+        type: "error",
+        text1: "Login Failed",
+        text2: "User not found.",
+      });
+      return;
+    }
+
+    if (user.role === "Facilitator") {
+      router.push({ pathname: "/facilitator-tabs/home" });
+    } else if (user.role === "Customer") {
+      router.push({ pathname: "/customer-tabs/home" });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Login Failed",
+        text2: "Role not recognized.",
+      });
+      return;
+    }
+
+    setEmail(email);
   };
 
   return (
@@ -79,8 +98,8 @@ const LogIn = () => {
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7"
             keyboardType="email-address"
-            isError={!!emailError}
-            errorMessage={emailError}
+            isError={!!errors.email}
+            errorMessage={errors.email}
           />
 
           <FormField
@@ -88,15 +107,14 @@ const LogIn = () => {
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-5"
-            isError={!!passwordError}
-            errorMessage={passwordError}
+            isError={!!errors.password}
+            errorMessage={errors.password}
           />
 
           <CustomButton
             title="Login"
-            handlePress={submit}
+            handlePress={handleSubmit}
             containerStyles="mt-7"
-            isLoading={loginUser.isPending}
           />
 
           <View className="justify-center pt-5 flex-row gap-1">
@@ -108,6 +126,7 @@ const LogIn = () => {
           </View>
         </View>
       </ScrollView>
+      <Toast />
     </SafeAreaView>
   );
 };

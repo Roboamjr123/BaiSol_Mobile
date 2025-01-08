@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   useColorScheme,
+  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { users } from "../../constants/SampleData";
@@ -18,6 +19,7 @@ const Profile = () => {
   const user = users.find((user) => user.email === email);
 
   const scheme = useColorScheme(); // Detect current theme
+  const [isModalVisible, setModalVisible] = useState(false); // Modal state
 
   // Theme-specific styles
   const styles = {
@@ -31,6 +33,7 @@ const Profile = () => {
   };
 
   const logout = () => {
+    setModalVisible(false); // Close modal
     setTimeout(() => {
       router.replace("/log-in");
     }, 500);
@@ -52,7 +55,10 @@ const Profile = () => {
   return (
     <SafeAreaView className={`flex-1 ${styles.background}`}>
       <ScrollView contentContainerStyle={{ padding: 16 }}>
-        <TouchableOpacity className="w-full items-end" onPress={logout}>
+        <TouchableOpacity
+          className="w-full items-end"
+          onPress={() => setModalVisible(true)}
+        >
           <Image
             source={icons.logout}
             resizeMode="contain"
@@ -124,6 +130,41 @@ const Profile = () => {
           ))}
         </TouchableOpacity>
       </ScrollView>
+
+      {/* Custom Confirmation Modal */}
+      <Modal
+        transparent={true}
+        visible={isModalVisible}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View
+            className={`w-[80%] p-6 rounded-lg ${styles.cardBackground} shadow-lg`}
+          >
+            <Text className={`text-lg font-bold mb-4 ${styles.textPrimary}`}>
+              Confirm Logout
+            </Text>
+            <Text className={`text-base mb-6 ${styles.textSecondary}`}>
+              Are you sure you want to log out?
+            </Text>
+            <View className="flex-row justify-end">
+              <TouchableOpacity
+                onPress={() => setModalVisible(false)}
+                className="px-4 py-2 rounded-lg bg-gray-300 mr-3"
+              >
+                <Text className="text-gray-800 font-medium">Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={logout}
+                className="px-4 py-2 rounded-lg bg-red-600"
+              >
+                <Text className="text-white font-medium">Logout</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };

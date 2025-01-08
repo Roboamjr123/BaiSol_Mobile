@@ -13,7 +13,10 @@ interface TabIconProps {
 }
 
 const TabIcon: React.FC<TabIconProps> = ({ icon, color, name, focused }) => (
-  <View className="items-center justify-center gap-2">
+  <View
+    className="items-center justify-center gap-2"
+    style={{ width: 100, paddingTop: 35 }}
+  >
     <Image
       source={icon}
       resizeMode="contain"
@@ -36,19 +39,9 @@ const TabsLayout: React.FC = () => {
   const colorScheme = useColorScheme();
   const isLightMode = colorScheme === "light";
 
-  const { email } = useAuth();
-  const user = users.find((user) => user.email === email);
-  const isFacilitator = user?.role === "Facilitator";
-
   const tabs = [
     { name: "home", title: "Home", icon: icons.home },
     { name: "reports", title: "Reports", icon: icons.reports },
-    ...(isFacilitator
-      ? [
-          { name: "supply", title: "Supply", icon: icons.supply },
-          { name: "customers", title: "Customers", icon: icons.customers },
-        ]
-      : []),
     { name: "profile", title: "Profile", icon: icons.profile },
   ];
 

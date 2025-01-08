@@ -73,7 +73,7 @@ const VerifyAccount = () => {
       setTimeout(() => {
         setIsSubmitting(false);
         router.push({
-          pathname: "/(tabs)/home",
+          pathname: "/customer-tabs/home",
         });
       }, 1000);
       return;
