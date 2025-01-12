@@ -1,24 +1,9 @@
+// Customers' Billing
+
 import React from "react";
 import { View, Text, FlatList, TouchableOpacity, Linking } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { paymentsData } from "../../constants/PaymentSampleData";
-
-// Define the type for payment data
-type Payment = {
-  referenceNumber: string;
-  checkoutUrl: string;
-  amount: string;
-  description: string;
-  status: string;
-  sourceType: string;
-  createdAt: string;
-  updatedAt: string;
-  paidAt: string | null;
-  paymentFee: string;
-  isAcknowledged: boolean;
-  acknowledgedBy: string;
-  acknowledgedAt: string | null;
-};
+import { Payment, paymentsData } from "../constants/PaymentSampleData";
 
 const BillPayment = () => {
   const { projectId } = useLocalSearchParams();
@@ -35,7 +20,6 @@ const BillPayment = () => {
       isAcknowledged,
     } = item;
 
-    // Check if the previous payment is unpaid
     const isDisabled = index > 0 && paymentsData[index - 1].status !== "paid";
 
     return (
@@ -71,7 +55,7 @@ const BillPayment = () => {
             onPress={() => {
               if (!isDisabled) {
                 alert("Redirecting to payment...");
-                // Linking.openURL(checkoutUrl); // Uncomment for real navigation
+                // Linking.openURL(checkoutUrl);
               } else {
                 alert("You must pay the previous payment first.");
               }
@@ -98,7 +82,7 @@ const BillPayment = () => {
   return (
     <View className="flex-1 bg-gray-100 p-4">
       <Text className="text-xl font-bold text-center text-gray-800 mb-4">
-        Payment Details for Project ID: {projectId}
+        Bills
       </Text>
       <FlatList
         data={paymentsData as Payment[]}

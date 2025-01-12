@@ -91,7 +91,7 @@ const RootLayout = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="customer/bill-payment"
+              name="bill-payment"
               options={{
                 headerShown: true,
                 title: "Bill Payment",

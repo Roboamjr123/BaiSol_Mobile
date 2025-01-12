@@ -12,6 +12,7 @@ import { useAuth } from "../auth-context";
 import { users } from "@/constants/ClientProjectInfo";
 import { IClientProjectInfo } from "../../constants/ClientProjectInfo";
 import { getProjectsByUserId } from "../../constants/ClientProjectInfo";
+import { router } from "expo-router";
 
 interface InfoRowProps {
   label: string;
@@ -43,7 +44,6 @@ const InstallerCard: React.FC<InstallerCardProps> = ({ name, position }) => (
 const Home: React.FC = () => {
   const { email } = useAuth();
   const scheme = useColorScheme();
-
   const styles = {
     background: scheme === "dark" ? "bg-[#161622]" : "bg-[#F9F9F9]",
     textPrimary: scheme === "dark" ? "text-white" : "text-gray-800",
@@ -108,7 +108,10 @@ const Home: React.FC = () => {
         </View>
 
         <View className="flex-row justify-between px-5 mt-5">
-          <TouchableOpacity className="items-center">
+          <TouchableOpacity
+            className="items-center"
+            onPress={() => router.push("/bill-payment")}
+          >
             <CircularProgress
               value={paymentProgress}
               radius={40}
@@ -126,7 +129,10 @@ const Home: React.FC = () => {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className="items-center">
+          <TouchableOpacity
+            className="items-center"
+            onPress={() => router.push("/customer-tabs/reports")}
+          >
             <CircularProgress
               value={projectProgress}
               radius={40}
