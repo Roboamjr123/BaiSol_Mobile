@@ -7,7 +7,7 @@ const ReportsData = [
       plannedEndDate: "2024-10-25T09:00:00Z",
       isEnable: false,
       isFinished: true,
-      proofImage: "https://www.autodesk.com/blogs/construction/wp-content/uploads/2024/07/common-types-of-construction-tools-60.jpg",
+      proofImage: require("../assets/images/card4.jpg"),
     },
     {
       id: 8,

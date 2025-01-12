@@ -59,9 +59,8 @@ const CustomerReports = () => {
             <View className="border border-gray-300 rounded-lg h-40 justify-center items-center mb-4">
               {selectedReport.proofImage ? (
                 <Image
-                  source={{uri: selectedReport.proofImage}}
-                  className="w-full h-full rounded-lg"
-                  style={{width: 300, height:300}}
+                  source={selectedReport.proofImage}
+                  className="w-full h-full"
                 />
               ) : (
                 <Text className="text-gray-400">
