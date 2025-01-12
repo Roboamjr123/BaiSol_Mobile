@@ -15,8 +15,10 @@ import reports from "../assets/icons/reports.png";
 import supply from "../assets/icons/supply.png";
 import customers from "../assets/icons/customers.png";
 import quotation from "../assets/icons/quotation.png";
+import bill from "../assets/icons/bill.png";
 
 export default {
+  bill,
   quotation,
   customers,
   supply,

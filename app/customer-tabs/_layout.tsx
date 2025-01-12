@@ -42,7 +42,8 @@ const TabsLayout: React.FC = () => {
   const tabs = [
     { name: "home", title: "Home", icon: icons.home },
     { name: "quotation", title: "Quotation", icon: icons.quotation },
-    { name: "reports", title: "Reports", icon: icons.reports },
+    { name: "bill-payment", title: "Billing", icon: icons.bill },
+    { name: "reports", title: "Project", icon: icons.reports },
     { name: "profile", title: "Profile", icon: icons.profile },
   ];
 

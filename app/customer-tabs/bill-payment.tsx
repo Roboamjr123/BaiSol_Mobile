@@ -1,9 +1,7 @@
-// Customers' Billing
-
 import React from "react";
 import { View, Text, FlatList, TouchableOpacity, Linking } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { Payment, paymentsData } from "../constants/PaymentSampleData";
+import { Payment, paymentsData } from "../../constants/PaymentSampleData";
 
 const BillPayment = () => {
   const { projectId } = useLocalSearchParams();
@@ -68,7 +66,7 @@ const BillPayment = () => {
             >
               {isDisabled ? "Payment Locked" : "Pay Now"}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> 
         )}
         {isAcknowledged && (
           <Text className="mt-4 text-green-600 text-sm font-bold">
@@ -80,9 +78,9 @@ const BillPayment = () => {
   };
 
   return (
-    <View className="flex-1 bg-gray-100 p-4">
+    <View className="flex-1 bg-gray-100 px-4 py-12">
       <Text className="text-xl font-bold text-center text-gray-800 mb-4">
-        Bills
+        Bill Payment
       </Text>
       <FlatList
         data={paymentsData as Payment[]}

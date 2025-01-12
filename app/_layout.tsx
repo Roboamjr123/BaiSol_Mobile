@@ -90,8 +90,8 @@ const RootLayout = () => {
               name="customer-tabs"
               options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name="bill-payment"
+            {/* <Stack.Screen
+              name="customer/bill-payment"
               options={{
                 headerShown: true,
                 title: "Bill Payment",
@@ -105,7 +105,7 @@ const RootLayout = () => {
                 },
                 headerTintColor: "#ff6f00",
               }}
-            />
+            /> */}
 
             {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }}/> */}
           </Stack>

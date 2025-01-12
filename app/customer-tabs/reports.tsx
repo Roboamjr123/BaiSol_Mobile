@@ -1,109 +1,118 @@
-import React from "react";
-import { View, Text, FlatList } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useColorScheme } from "react-native";
-import { projectReports } from "@/constants/ReportsSampleData"; // Assuming this is your import path
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import ReportsData from "../../constants/ReportsDataForCustomer";
+import { images } from "@/constants";
 
+// Define types for reports
 type Report = {
-  referenceNumber: string;
-  reportType: "Payment" | "Progress" | "Deadline"; 
-  description: string;
-  status: "paid" | "unpaid" | "in-progress" | "completed" | "upcoming";
-  completedPercentage?: number; 
-  dueDate?: string; 
-  acknowledgedBy?: string; 
-  acknowledgedAt?: string;
-  reportDate?: string; 
-  message: string;
+  id: number;
+  taskName: string;
+  plannedStartDate: string;
+  plannedEndDate: string;
+  isEnable: boolean;
+  isFinished: boolean;
+  proofImage?: string | null;
 };
 
-const Reports = () => {
-  const scheme = useColorScheme();
+const CustomerReports = () => {
+  const [tasks] = useState<Report[]>(ReportsData);
+  const [selectedReport, setSelectedReport] = useState<Report | null>(null);
 
-  const styles = {
-    background: scheme === "dark" ? "bg-[#161622]" : "bg-[#F9F9F9]",
-    textPrimary: scheme === "dark" ? "text-white" : "text-[#555555]",
-    textSecondary: scheme === "dark" ? "text-[#B0B0B0]" : "text-[#555555]",
-    cardBackground: scheme === "dark" ? "bg-[#232533]" : "bg-white",
-  };
-
-  // Render report item
-  const renderReport = ({ item }: { item: Report }) => {
-    const {
-      referenceNumber,
-      reportType,
-      description,
-      status,
-      completedPercentage,
-      dueDate,
-      acknowledgedBy,
-      acknowledgedAt,
-      message,
-      reportDate,
-    } = item;
+  const renderSelectedReport = () => {
+    if (!selectedReport) return null;
 
     return (
-      <View className={`${styles.cardBackground} p-4 rounded-lg mb-4 shadow-md`}>
-        <Text className={`${styles.textPrimary} text-lg font-bold`}>Reference: {referenceNumber}</Text>
-        <Text className={`${styles.textSecondary} text-base`}>Description: {description}</Text>
-        {reportType === "Progress" && (
-          <Text className={`${styles.textSecondary} text-sm`}>
-            Status:{" "}
-            <Text
-              className={`font-semibold ${
-                status === "completed" ? "text-green-600" : "text-orange-600"
-              }`}
-            >
-              {completedPercentage}% Completed
+      <SafeAreaView className="flex-1 bg-gray-100">
+        <ScrollView className="px-3 py-6">
+          <TouchableOpacity
+            onPress={() => setSelectedReport(null)}
+            className="mb-4"
+          >
+            <Text className="text-blue-500 text-lg font-medium">
+              {"< Back"}
             </Text>
-            {reportDate && <Text className={`${styles.textSecondary} text-sm`}> Reported on: {reportDate}</Text>}
+          </TouchableOpacity>
+
+          <Text className="text-2xl font-bold text-gray-800 mb-2">
+            {selectedReport.taskName}
           </Text>
-        )}
-        {reportType === "Deadline" && (
-          <Text className={`${styles.textSecondary} text-sm`}>
-            Status:{" "}
-            <Text className={`font-semibold text-red-600`}>Upcoming</Text>
-            {dueDate && <Text className={`${styles.textSecondary} text-sm`}> Due Date: {dueDate}</Text>}
+          <Text className="text-lg text-gray-600 mb-2">
+            Start: {new Date(selectedReport.plannedStartDate).toDateString()}
           </Text>
-        )}
-        {reportType === "Payment" && (
-          <Text className={`${styles.textSecondary} text-sm`}>
-            Status:{" "}
-            <Text
-              className={`font-semibold ${
-                status === "paid" ? "text-green-600" : "text-red-600"
-              }`}
-            >
-              {status.toUpperCase()}
-            </Text>
-            {acknowledgedBy && (
-              <>
-                <Text className={`${styles.textSecondary} text-sm`}> Acknowledged By: {acknowledgedBy}</Text>
-                <Text className={`${styles.textSecondary} text-sm`}> Acknowledged At: {acknowledgedAt}</Text>
-              </>
-            )}
+          <Text className="text-lg text-gray-600 mb-4">
+            End: {new Date(selectedReport.plannedEndDate).toDateString()}
           </Text>
-        )}
-        <Text className={`${styles.textPrimary} mt-2 text-gray-600`}>{message}</Text>
-      </View>
+          <Text className="text-lg text-gray-600 mb-4">
+            Status: {selectedReport.isFinished ? "Completed" : "Pending"}
+          </Text>
+
+          <View className="border border-gray-300 rounded-lg p-4 mb-4 bg-white">
+            <Text className="text-lg font-semibold mb-2">Proof of Task</Text>
+            <View className="border border-gray-300 rounded-lg h-40 justify-center items-center mb-4">
+              {selectedReport.proofImage ? (
+                <Image
+                  source={{uri: selectedReport.proofImage}}
+                  className="w-full h-full rounded-lg"
+                  style={{width: 300, height:300}}
+                />
+              ) : (
+                <Text className="text-gray-400">
+                  No proof of task has been uploaded.
+                </Text>
+              )}
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   };
 
-  return (
-    <SafeAreaView className={`${styles.background} flex-1 p-4`}>
-      <Text className={`${styles.textPrimary} text-xl font-bold text-center mb-4`}>Project Status Reports</Text>
+  const renderReport = ({ item }: { item: Report }) => (
+    <TouchableOpacity
+      onPress={() => setSelectedReport(item)}
+      className="p-4 rounded-lg shadow-sm my-2 flex-row justify-between items-center bg-white"
+    >
+      <View>
+        <Text className="text-lg font-semibold text-gray-800">
+          {item.taskName}
+        </Text>
+        <Text className="text-sm text-gray-500">
+          {new Date(item.plannedStartDate).toDateString()} -{" "}
+          {new Date(item.plannedEndDate).toDateString()}
+        </Text>
+        <Text className="text-sm text-gray-600">
+          Status: {item.isFinished ? "Completed" : "Pending"}
+        </Text>
+      </View>
+      <View className="bg-blue-500 rounded-full px-3 py-1">
+        <Text className="text-white text-sm font-medium">View</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  return selectedReport ? (
+    renderSelectedReport()
+  ) : (
+    <SafeAreaView className="flex-1 bg-gray-100 py-12 px-4">
+      <Text className="text-2xl font-black text-gray-800 mb-4 tracking-wide text-center">
+        TASK REPORTS
+      </Text>
       <FlatList
-        data={projectReports as Report[]} // Ensure the data is typed correctly
-        keyExtractor={(item) => item.referenceNumber}
+        data={tasks}
         renderItem={renderReport}
-        ListEmptyComponent={
-          <Text className={`${styles.textSecondary} text-center mt-8`}>
-            No reports available.
-          </Text>
-        }
+        keyExtractor={(item) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
   );
 };
 
-export default Reports;
+export default CustomerReports;

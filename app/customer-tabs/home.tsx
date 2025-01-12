@@ -110,7 +110,7 @@ const Home: React.FC = () => {
         <View className="flex-row justify-between px-5 mt-5">
           <TouchableOpacity
             className="items-center"
-            onPress={() => router.push("/bill-payment")}
+            onPress={() => router.push({ pathname: "/customer-tabs/bill-payment" })}
           >
             <CircularProgress
               value={paymentProgress}
