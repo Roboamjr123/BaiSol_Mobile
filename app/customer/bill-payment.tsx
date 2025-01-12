@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Linking } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { paymentsData } from "../../constants/PaymentSampleData";
 
@@ -34,15 +34,16 @@ const BillPayment = () => {
       checkoutUrl,
       isAcknowledged,
     } = item;
-  
+
     // Check if the previous payment is unpaid
-    const isDisabled =
-      index > 0 && paymentsData[index - 1].status !== "paid";
-  
+    const isDisabled = index > 0 && paymentsData[index - 1].status !== "paid";
+
     return (
       <View className="bg-white p-4 rounded-lg mb-4 shadow-md">
         <Text className="text-lg font-bold text-gray-700">{description}</Text>
-        <Text className="text-base text-gray-600">₱{parseFloat(amount).toFixed(2)}</Text>
+        <Text className="text-base text-gray-600">
+          ₱{parseFloat(amount).toFixed(2)}
+        </Text>
         <Text className="text-sm text-gray-500">
           Status:{" "}
           <Text
@@ -55,7 +56,9 @@ const BillPayment = () => {
         </Text>
         {status === "paid" && (
           <>
-            <Text className="text-sm text-gray-500">Paid via: {sourceType}</Text>
+            <Text className="text-sm text-gray-500">
+              Paid via: {sourceType}
+            </Text>
             <Text className="text-sm text-gray-500">Paid At: {paidAt}</Text>
           </>
         )}
@@ -90,7 +93,7 @@ const BillPayment = () => {
         )}
       </View>
     );
-  };  
+  };
 
   return (
     <View className="flex-1 bg-gray-100 p-4">

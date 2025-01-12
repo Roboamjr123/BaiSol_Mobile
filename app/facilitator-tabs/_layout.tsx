@@ -15,7 +15,7 @@ interface TabIconProps {
 const TabIcon: React.FC<TabIconProps> = ({ icon, color, name, focused }) => (
   <View
     className="items-center justify-center gap-2"
-    style={{ width: 100, paddingTop: 35}}
+    style={{ width: 100, paddingTop: 30 }}
   >
     <Image
       source={icon}
@@ -57,7 +57,7 @@ const TabsLayout: React.FC = () => {
           backgroundColor: isLightMode ? "#FFFFFF" : "#161622",
           borderTopWidth: 1,
           borderTopColor: isLightMode ? "#E0E0E0" : "#232533",
-          height: 90,
+          height: 84,
           justifyContent: "center",
         },
       }}

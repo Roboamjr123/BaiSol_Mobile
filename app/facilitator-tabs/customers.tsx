@@ -119,7 +119,7 @@ const Customers = () => {
           colorScheme === "dark" ? "text-white" : "text-[#333333]"
         }`}
       >
-        Your Customers
+        Customers Facilitated
       </Text>
       {currentCustomers.length > 0 ? (
         <FlatList
