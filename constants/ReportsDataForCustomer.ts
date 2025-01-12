@@ -16,7 +16,7 @@ const ReportsData = [
       plannedEndDate: "2024-10-25T09:00:00Z",
       isEnable: true,
       isFinished: false,
-      proofImage: "https://www.autodesk.com/blogs/construction/wp-content/uploads/2024/07/common-types-of-construction-tools-60.jpg",
+      proofImage: require("../assets/images/card5.jpg"),
     },
     {
       id: 5,
@@ -25,7 +25,7 @@ const ReportsData = [
       plannedEndDate: "2024-10-30T09:00:00Z",
       isEnable: false,
       isFinished: false,
-      proofImage: "https://www.autodesk.com/blogs/construction/wp-content/uploads/2024/07/common-types-of-construction-tools-60.jpg", 
+      proofImage: require("../assets/images/card3_engrs.jpg"), 
     },
     {
       id: 10,
@@ -34,7 +34,7 @@ const ReportsData = [
       plannedEndDate: "2024-10-31T09:00:00Z",
       isEnable: false,
       isFinished: false,
-      proofImage: "https://www.autodesk.com/blogs/construction/wp-content/uploads/2024/07/common-types-of-construction-tools-60.jpg", 
+      proofImage: require("../assets/images/thumbnail.png"), 
     },
   ];
   
