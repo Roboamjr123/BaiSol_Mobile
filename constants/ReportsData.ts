@@ -4,6 +4,8 @@ const ReportsData = [
     taskName: "New Task 5",
     plannedStartDate: "2024-10-23T00:00:00Z",
     plannedEndDate: "2024-10-25T09:00:00Z",
+    startDate: "2024-10-23T00:00:00Z", // Sample start date
+    endDate: "2024-10-25T09:00:00Z", // Sample end date
     isEnable: false,
     isFinished: false,
     taskProgress: 0, // Adding taskProgress
@@ -11,6 +13,7 @@ const ReportsData = [
     actualStart: "2024-10-23T00:00:00Z", // Actual start date can be assigned when the task starts
     estimationStart: "2024-10-23T00:00:00Z", // Planned start date
     isLate: false, // Initially, not late
+    isStarting: false, // Will be determined dynamically
     daysLate: 0, // Initially, no days late
   },
   {
@@ -18,6 +21,8 @@ const ReportsData = [
     taskName: "New Task 4",
     plannedStartDate: "2024-10-24T00:00:00Z",
     plannedEndDate: "2024-10-25T09:00:00Z",
+    startDate: "2024-10-24T00:00:00Z", // Sample start date
+    endDate: "2024-10-25T09:00:00Z", // Sample end date
     isEnable: true,
     isFinished: false,
     taskProgress: 0, // 30% progress
@@ -25,6 +30,7 @@ const ReportsData = [
     actualStart: "2024-10-24T00:00:00Z",
     estimationStart: "2024-10-24T00:00:00Z",
     isLate: false,
+    isStarting: false, // Will be determined dynamically
     daysLate: 0,
   },
   {
@@ -32,6 +38,8 @@ const ReportsData = [
     taskName: "New Task 1",
     plannedStartDate: "2024-10-25T00:00:00Z",
     plannedEndDate: "2024-10-30T09:00:00Z",
+    startDate: "2024-10-25T00:00:00Z", // Sample start date
+    endDate: "2024-10-30T09:00:00Z", // Sample end date
     isEnable: false,
     isFinished: false,
     taskProgress: 0,
@@ -39,6 +47,7 @@ const ReportsData = [
     actualStart: "2024-10-25T00:00:00Z",
     estimationStart: "2024-10-25T00:00:00Z",
     isLate: false,
+    isStarting: false, // Will be determined dynamically
     daysLate: 0,
   },
   {
@@ -46,6 +55,8 @@ const ReportsData = [
     taskName: "New Task 6",
     plannedStartDate: "2024-10-28T00:00:00Z",
     plannedEndDate: "2024-10-31T09:00:00Z",
+    startDate: "2024-10-28T00:00:00Z", // Sample start date
+    endDate: "2024-10-31T09:00:00Z", // Sample end date
     isEnable: false,
     isFinished: false,
     taskProgress: 0,
@@ -53,6 +64,7 @@ const ReportsData = [
     actualStart: "2024-10-28T00:00:00Z",
     estimationStart: "2024-10-28T00:00:00Z",
     isLate: false,
+    isStarting: false, // Will be determined dynamically
     daysLate: 0,
   },
 ];

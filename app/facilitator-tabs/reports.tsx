@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,11 +14,14 @@ import * as ImagePicker from "expo-image-picker";
 import ReportsData from "../../constants/ReportsData";
 
 // Define types for reports and selected report
+// Define types for reports and selected report
 type Report = {
   id: number;
   taskName: string;
   plannedStartDate: string;
   plannedEndDate: string;
+  startDate: string;
+  endDate: string;
   isEnable: boolean;
   isFinished: boolean;
   taskProgress: number;
@@ -26,6 +29,7 @@ type Report = {
   actualStart: string;
   estimationStart: string;
   isLate: boolean;
+  isStarting: boolean;
   daysLate: number;
 };
 
@@ -63,6 +67,28 @@ const Reports = () => {
       Alert.alert("Error", "Something went wrong while picking the image.");
     }
   };
+
+  // Function to check the starting and late status
+  const updateTaskStatus = (task: Report) => {
+    const currentDate = new Date();
+    const plannedStartDate = new Date(task.plannedStartDate);
+    const plannedEndDate = new Date(task.plannedEndDate);
+
+    const isStarting =
+      currentDate >= plannedStartDate && currentDate <= plannedEndDate;
+    const isLate = currentDate > plannedEndDate && !task.isFinished;
+
+    return { isStarting, isLate };
+  };
+
+  useEffect(() => {
+    const updatedTasks = tasks.map((task) => {
+      const { isStarting, isLate } = updateTaskStatus(task);
+      return { ...task, isStarting, isLate };
+    });
+
+    setTasks(updatedTasks);
+  }, []); // Update status on mount
 
   const handleProgressChange = (value: string) => {
     // Ensure the value is a valid number between 0 and 100
@@ -123,10 +149,10 @@ const Reports = () => {
             {selectedReport.taskName}
           </Text>
           <Text className="text-lg text-gray-600 mb-2">
-            Start: {new Date(selectedReport.plannedStartDate).toDateString()}
+            Start: {new Date(selectedReport.startDate).toDateString()}
           </Text>
           <Text className="text-lg text-gray-600 mb-4">
-            End: {new Date(selectedReport.plannedEndDate).toDateString()}
+            End: {new Date(selectedReport.endDate).toDateString()}
           </Text>
           <Text className="text-lg text-gray-600 mb-4">
             Status:{" "}
@@ -230,8 +256,8 @@ const Reports = () => {
           {item.taskName}
         </Text>
         <Text className="text-sm text-gray-500">
-          {new Date(item.plannedStartDate).toDateString()} -{" "}
-          {new Date(item.plannedEndDate).toDateString()}
+          {new Date(item.startDate).toDateString()} -{" "}
+          {new Date(item.endDate).toDateString()}
         </Text>
         <Text className="text-sm text-gray-600">
           Status:{" "}
