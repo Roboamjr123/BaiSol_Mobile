@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import RequestSupply from "@/components/RequestSupply";
+// import RequestSupply from "@/components/RequestSupply";
 
 // Mock sample data for materials
 const mockAssignedMaterials = [
@@ -207,7 +207,7 @@ const Supply = () => {
         className="mb-4"
       />
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={openModal}
         className={`flex-row items-center justify-between px-4 py-3 rounded-md ${styles.buttonBackground}`}
       >
@@ -215,9 +215,9 @@ const Supply = () => {
           Request a supply?
         </Text>
         <Ionicons name="arrow-forward" size={20} color={styles.iconColor} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      <RequestSupply isVisible={isModalVisible} onClose={closeModal} />
+      {/* <RequestSupply isVisible={isModalVisible} onClose={closeModal} /> */}
     </SafeAreaView>
   );
 };
