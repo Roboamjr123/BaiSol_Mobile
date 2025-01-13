@@ -43,24 +43,24 @@ const styles = {
 
 const sampleAssignedEquipment: IAssignedEquipment[] = [
   {
-    eqptCategory: "Heavy Machinery",
+    eqptCategory: "Hand Tools",
     details: [
       {
         suppId: 1,
         eqptCode: "EQ-001",
-        eqptDescript: "Excavator",
+        eqptDescript: "Hammer",
         quantity: 3,
         eqptUnit: "Units",
       },
     ],
   },
   {
-    eqptCategory: "Construction Tools",
+    eqptCategory: "Electronic Tools",
     details: [
       {
         suppId: 3,
         eqptCode: "EQ-003",
-        eqptDescript: "Cement Mixer",
+        eqptDescript: "Multimeter",
         quantity: 5,
         eqptUnit: "Units",
       },

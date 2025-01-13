@@ -11,7 +11,7 @@ import {
   TextInput,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import RequestData from "../../constants/RequestData";
+import ReportsData from "../../constants/ReportsData";
 
 // Define types for reports and selected report
 type Report = {
@@ -30,7 +30,7 @@ type Report = {
 };
 
 const Reports = () => {
-  const [tasks, setTasks] = useState<Report[]>(RequestData);
+  const [tasks, setTasks] = useState<Report[]>(ReportsData);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [image1, setImage1] = useState<string | null>(null);
   const [progressInput, setProgressInput] = useState<string>("");
