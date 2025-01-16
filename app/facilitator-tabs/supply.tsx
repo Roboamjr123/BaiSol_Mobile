@@ -7,20 +7,95 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { materialsData, equipmentData } from "../../constants/SupplySampleData";
 import { Ionicons } from "@expo/vector-icons";
 import RequestSupply from "@/components/RequestSupply";
 
-interface SupplyItem {
-  id: number;
-  name: string;
-  qty: number;
-  status: string;
-}
+// Mock sample data for materials
+const mockAssignedMaterials = [
+  {
+    mtlCategory: "Construction Materials",
+    details: [
+      {
+        suppId: 1,
+        mtlId: 101,
+        mtlDescription: "Cement",
+        mtlQuantity: 50,
+        mtlUnit: "Bags",
+      },
+      {
+        suppId: 2,
+        mtlId: 102,
+        mtlDescription: "Steel Rods",
+        mtlQuantity: 100,
+        mtlUnit: "Pieces",
+      },
+    ],
+  },
+  {
+    mtlCategory: "Electrical Supplies",
+    details: [
+      {
+        suppId: 3,
+        mtlId: 201,
+        mtlDescription: "Copper Wires",
+        mtlQuantity: 200,
+        mtlUnit: "Meters",
+      },
+      {
+        suppId: 4,
+        mtlId: 202,
+        mtlDescription: "Light Bulbs",
+        mtlQuantity: 30,
+        mtlUnit: "Units",
+      },
+    ],
+  },
+];
+
+// Mock sample data for equipment
+const mockAssignedEquipment = [
+  {
+    eqptCategory: "Heavy Machinery",
+    details: [
+      {
+        suppId: 5,
+        eqptCode: "EQ001",
+        eqptDescript: "Excavator",
+        quantity: 2,
+        eqptUnit: "Units",
+      },
+      {
+        suppId: 6,
+        eqptCode: "EQ002",
+        eqptDescript: "Bulldozer",
+        quantity: 1,
+        eqptUnit: "Units",
+      },
+    ],
+  },
+  {
+    eqptCategory: "Power Tools",
+    details: [
+      {
+        suppId: 7,
+        eqptCode: "EQ003",
+        eqptDescript: "Drill Machine",
+        quantity: 5,
+        eqptUnit: "Units",
+      },
+      {
+        suppId: 8,
+        eqptCode: "EQ004",
+        eqptDescript: "Angle Grinder",
+        quantity: 3,
+        eqptUnit: "Units",
+      },
+    ],
+  },
+];
 
 const Supply = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -39,18 +114,21 @@ const Supply = () => {
   };
 
   // Render a table row for each item
-  const supplies = ({ item }: { item: SupplyItem }) => (
+  const renderSupplyItem = ({ item }: { item: any }) => (
     <View
       className={`flex-row items-center justify-between p-4 ${styles.cardBackground} mb-2 rounded-lg shadow-sm`}
     >
       <Text className={`text-base ${styles.textPrimary} flex-1`}>
-        {item.name}
+        {item.id}
+      </Text>
+      <Text className={`text-base ${styles.textPrimary} flex-1`}>
+        {item.description}
       </Text>
       <Text className={`text-sm ${styles.textSecondary} flex-1 text-center`}>
-        {item.qty}
+        {item.unit}
       </Text>
       <Text className={`text-sm ${styles.textSecondary} flex-1 text-center`}>
-        {item.status}
+        {item.quantity}
       </Text>
     </View>
   );
@@ -61,58 +139,70 @@ const Supply = () => {
       className={`flex-row ${styles.headerBackground} p-4 rounded-lg mb-2 shadow-sm`}
     >
       <Text className={`text-base ${styles.textPrimary} flex-1 font-semibold`}>
-        Name
+        Item no.
+      </Text>
+      <Text className={`text-base ${styles.textPrimary} flex-1 font-semibold`}>
+        Description
+      </Text>
+      <Text
+        className={`text-base ${styles.textPrimary} flex-1 text-center font-semibold`}
+      >
+        Unit
       </Text>
       <Text
         className={`text-base ${styles.textPrimary} flex-1 text-center font-semibold`}
       >
         Quantity
       </Text>
-      <Text
-        className={`text-base ${styles.textPrimary} flex-1 text-center font-semibold`}
-      >
-        Status
-      </Text>
     </View>
   );
 
-  const materials = materialsData.map((item) => ({
-    id: item.id,
-    name: item.MatN,
-    qty: item.qty,
-    status: item.status,
-  }));
+  // Transform materials data
+  const materials = mockAssignedMaterials.flatMap((category) =>
+    category.details?.map((item) => ({
+      id: item.mtlId,
+      description: item.mtlDescription,
+      quantity: item.mtlQuantity || 0,
+      unit: item.mtlUnit,
+    }))
+  );
 
-  const equipment = equipmentData.map((item) => ({
-    id: item.id,
-    name: item.EqpmntN,
-    qty: item.qty,
-    status: item.status,
-  }));
+  // Transform equipment data
+  const equipment = mockAssignedEquipment.flatMap((category) =>
+    category.details?.map((item) => ({
+      id: item.eqptCode,
+      description: item.eqptDescript,
+      quantity: item.quantity,
+      unit: item.eqptUnit,
+    }))
+  );
 
   return (
     <SafeAreaView className={`flex-1 ${styles.background} p-4`}>
       <Text className={`text-3xl font-extrabold mb-5 ${styles.textPrimary}`}>
         Supplies
       </Text>
+
+      {/* Materials Section */}
       <Text className={`text-xl font-semibold ${styles.textPrimary} mb-4`}>
         Materials
       </Text>
       <FlatList
         data={materials}
         keyExtractor={(item) => `material-${item.id}`}
-        renderItem={supplies}
+        renderItem={renderSupplyItem}
         ListHeaderComponent={renderHeader}
         className="mb-6"
       />
 
+      {/* Equipment Section */}
       <Text className={`text-xl font-semibold ${styles.textPrimary} mb-4`}>
         Equipment
       </Text>
       <FlatList
         data={equipment}
         keyExtractor={(item) => `equipment-${item.id}`}
-        renderItem={supplies}
+        renderItem={renderSupplyItem}
         ListHeaderComponent={renderHeader}
         className="mb-4"
       />

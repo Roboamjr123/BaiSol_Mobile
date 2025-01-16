@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Text, Image } from "react-native";
 import { Tabs } from "expo-router";
 import { icons } from "../../constants";
@@ -43,7 +44,7 @@ const TabsLayout: React.FC = () => {
     { name: "home", title: "Home", icon: icons.home },
     { name: "reports", title: "Reports", icon: icons.reports },
     { name: "supply", title: "Supply", icon: icons.supply },
-    { name: "customers", title: "Customers", icon: icons.customers },
+    { name: "request", title: "Request", icon: icons.request },
     { name: "profile", title: "Profile", icon: icons.profile },
   ];
 
@@ -69,7 +70,13 @@ const TabsLayout: React.FC = () => {
           options={{
             title,
             headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
+            tabBarIcon: ({
+              color,
+              focused,
+            }: {
+              color: string;
+              focused: boolean;
+            }) => (
               <TabIcon
                 icon={icon}
                 color={color}
